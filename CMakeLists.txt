@@ -10,12 +10,12 @@ add_definitions(-DASIO_STANDALONE)
 #find_package(Threads REQUIRED)
 
 set(HEADERS
-    port.hpp
+    serial_port.hpp
 )
 set(OVERALL_HEADER pbus++.hpp)
 
 set(SOURCES
-    port.cpp
+    serial_port.cpp
 )
 
 include(GNUInstallDirs)
