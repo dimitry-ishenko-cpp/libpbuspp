@@ -11,6 +11,7 @@ add_definitions(-DASIO_STANDALONE)
 
 set(HEADERS
     serial_port.hpp
+    types.hpp
 )
 set(OVERALL_HEADER pbus++.hpp)
 

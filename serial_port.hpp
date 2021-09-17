@@ -9,7 +9,11 @@
 #define PBUS_SERIAL_PORT_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include "types.hpp"
+
 #include <asio.hpp>
+#include <functional>
+#include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace pbus
@@ -34,6 +38,9 @@ constexpr auto operator"" _bits(unsigned long long n) noexcept { return static_c
 using namespace literals;
 
 ////////////////////////////////////////////////////////////////////////////////
+using recv_callback = std::function<void (std::string)>;
+
+////////////////////////////////////////////////////////////////////////////////
 class serial_port
 {
 public:
@@ -45,8 +52,15 @@ public:
     void set(stop_bits);
     void set(char_size);
 
+    void send(std::string);
+    void on_recv(recv_callback cb) { cb_ = std::move(cb); }
+
 private:
     asio::serial_port port_;
+    recv_callback cb_;
+
+    std::string recv_;
+    void sched_recv();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
