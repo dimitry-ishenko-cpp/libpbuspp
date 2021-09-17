@@ -17,6 +17,7 @@ set(OVERALL_HEADER pbus++.hpp)
 
 set(SOURCES
     serial_port.cpp
+    types.cpp
 )
 
 include(GNUInstallDirs)
