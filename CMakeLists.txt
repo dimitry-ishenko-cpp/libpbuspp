@@ -11,12 +11,14 @@ add_definitions(-DASIO_STANDALONE)
 
 set(HEADERS
     serial_port.hpp
+    switcher.hpp
     types.hpp
 )
 set(OVERALL_HEADER pbus++.hpp)
 
 set(SOURCES
     serial_port.cpp
+    switcher.cpp
     types.cpp
 )
 
