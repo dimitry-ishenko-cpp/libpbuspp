@@ -6,6 +6,8 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "types.hpp"
+
+#include <bitset>
 #include <stdexcept>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -46,6 +48,32 @@ void throw_if_fn_out_of_range(num fn, const std::string& where)
     if(fn > max_fn) throw std::out_of_range{
         "Function # out of range in " + where
     };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string to_hex(const pbus::map& map)
+{
+    std::bitset<max_id + 1> mask;
+    for(auto id : map)
+    {
+        throw_if_id_out_of_range(id, "to_hex()");
+        mask.set(id);
+    }
+
+    return to_hex(mask.to_ulong(), 6);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+std::string to_hex(num n, std::size_t size)
+{
+    std::string s;
+    for(auto i = size; i > 0; --i)
+    {
+        char c = (n >> (i * 4 - 4)) & 0xf;
+        s += c < 10 ? c + '0' : c + 'A' - 10;
+    }
+
+    return s;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
