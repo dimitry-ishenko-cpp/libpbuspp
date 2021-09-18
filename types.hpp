@@ -17,16 +17,13 @@ namespace pbus
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-enum token
-{
-    learn   = 'L',
-    recall  = 'R',
-    trigger = 'T',
-    query   = 'Q',
-    read    = 'R',
-    write   = 'W',
-    delim   = '\x0d'
-};
+constexpr char learn   = 'L';
+constexpr char recall  = 'R';
+constexpr char trigger = 'T';
+constexpr char query   = 'Q';
+constexpr char read    = 'R';
+constexpr char write   = 'W';
+constexpr char delim   = '\x0d';
 
 ////////////////////////////////////////////////////////////////////////////////
 using map = std::set<int>;
