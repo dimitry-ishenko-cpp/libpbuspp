@@ -9,6 +9,7 @@
 #define PBUS_TYPES_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <cstdint>
 #include <set>
 #include <string>
 
@@ -26,10 +27,11 @@ constexpr char write   = 'W';
 constexpr char delim   = '\x0d';
 
 ////////////////////////////////////////////////////////////////////////////////
-using map = std::set<int>;
+using num = std::uint8_t;
+using map = std::set<num>;
 
-constexpr int invalid = -1;
-int to_int(const std::string&);
+constexpr auto invalid = static_cast<num>(-1);
+num to_num(const std::string&);
 
 ////////////////////////////////////////////////////////////////////////////////
 }

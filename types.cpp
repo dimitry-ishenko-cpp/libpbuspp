@@ -12,9 +12,9 @@ namespace pbus
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-int to_int(const std::string& s)
+num to_num(const std::string& s)
 {
-    int n = 0;
+    num n = 0;
     for(auto c : s)
              if(c >= '0' && c <= '9') n = (n << 4) + c - '0';
         else if(c >= 'A' && c <= 'F') n = (n << 4) + c - 'A' + 10;
