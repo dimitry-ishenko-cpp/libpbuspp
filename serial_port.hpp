@@ -13,6 +13,7 @@
 
 #include <asio.hpp>
 #include <functional>
+#include <map>
 #include <string>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +39,7 @@ constexpr auto operator"" _bits(unsigned long long n) noexcept { return static_c
 using namespace literals;
 
 ////////////////////////////////////////////////////////////////////////////////
-using recv_callback = std::function<void (std::string)>;
+using recv_callback = std::function<void (const std::string&)>;
 
 ////////////////////////////////////////////////////////////////////////////////
 class serial_port
@@ -46,21 +47,38 @@ class serial_port
 public:
     serial_port(asio::io_context&, const std::string& device);
 
+    serial_port(const serial_port&) = delete;
+    serial_port(serial_port&&) = default;
+
+    serial_port& operator=(const serial_port&) = delete;
+    serial_port& operator=(serial_port&&) = default;
+
     void set(baud_rate);
     void set(flow_control);
     void set(parity);
     void set(stop_bits);
     void set(char_size);
 
-    void send(std::string);
-    void on_recv(recv_callback cb) { cb_ = std::move(cb); }
-
 private:
     asio::serial_port port_;
-    recv_callback cb_;
+
+    int ci_ = 0;
+    std::map<int, recv_callback> cb_;
 
     std::string recv_;
     void sched_recv();
+
+    void send(std::string);
+
+    int add_recv_callback(recv_callback cb)
+    {
+        cb_[ci_] = std::move(cb);
+        return ci_++;
+    }
+    void remove_recv_callback(int ci) { cb_.erase(ci); }
+
+    friend class switcher;
+    friend class device;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -43,7 +43,7 @@ void serial_port::sched_recv()
             auto cmd = recv_.substr(0, n - 1);
             recv_.erase(0, n);
 
-            if(cb_) cb_(std::move(cmd));
+            for(auto& [_, cb] : cb_) cb(cmd);
 
             sched_recv();
         }

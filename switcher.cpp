@@ -6,17 +6,19 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "switcher.hpp"
+
 #include <stdexcept>
+#include <utility>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace pbus
 {
 
 ////////////////////////////////////////////////////////////////////////////////
-switcher::switcher(serial_port port) :
-    port_{ std::move(port) }
+switcher::switcher(serial_port& port) :
+    port_{ &port }
 {
-    port.on_recv([&](std::string data)
+    ci_ = port_->add_recv_callback([&](std::string data)
     {
         if(data.size()) switch(data[0])
         {
@@ -42,31 +44,53 @@ switcher::switcher(serial_port port) :
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+switcher::~switcher()
+{
+    if(port_) port_->remove_recv_callback(ci_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+switcher::switcher(switcher&& rhs)
+{
+    *this = std::move(rhs);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+switcher& switcher::operator=(switcher&& rhs)
+{
+    std::swap(port_, rhs.port_);
+    std::swap(ci_  , rhs.ci_  );
+    std::swap(qcb_ , rhs.qcb_ );
+    std::swap(wcb_ , rhs.wcb_ );
+    return *this;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 void switcher::learn(const pbus::map& map, num reg)
 {
     throw_if_reg_out_of_range(reg, "switcher::learn()");
-    port_.send(pbus::learn + to_hex(map) + to_hex(reg, 3));
+    port_->send(pbus::learn + to_hex(map) + to_hex(reg, 3));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void switcher::recall(const pbus::map& map, num reg)
 {
     throw_if_reg_out_of_range(reg, "switcher::recall()");
-    port_.send(pbus::recall + to_hex(map) + to_hex(reg, 3));
+    port_->send(pbus::recall + to_hex(map) + to_hex(reg, 3));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void switcher::trigger(const pbus::map& map, num fn)
 {
     throw_if_fn_out_of_range(fn, "switcher::trigger()");
-    port_.send(pbus::trigger + to_hex(map) + to_hex(fn, 1));
+    port_->send(pbus::trigger + to_hex(map) + to_hex(fn, 1));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void switcher::query(num id)
 {
     throw_if_id_out_of_range(id, "switcher::query()");
-    port_.send(pbus::query + to_hex(id, 2));
+    port_->send(pbus::query + to_hex(id, 2));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +99,7 @@ void switcher::read(num id, num reg)
     throw_if_id_out_of_range(id, "switcher::read()");
     throw_if_reg_out_of_range(reg, "switcher::read()");
 
-    port_.send(pbus::read + to_hex(id, 2) + to_hex(reg, 3));
+    port_->send(pbus::read + to_hex(id, 2) + to_hex(reg, 3));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +108,7 @@ void switcher::write(num id, num reg, const std::string& data)
     throw_if_id_out_of_range(id, "switcher::write()");
     throw_if_reg_out_of_range(reg, "switcher::write()");
 
-    port_.send(pbus::write + to_hex(id, 2) + to_hex(reg, 3) + data);
+    port_->send(pbus::write + to_hex(id, 2) + to_hex(reg, 3) + data);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

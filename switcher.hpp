@@ -27,7 +27,14 @@ using write_response_callback = std::function<void (num id, num reg, const std::
 class switcher
 {
 public:
-    explicit switcher(serial_port);
+    explicit switcher(serial_port&);
+    ~switcher();
+
+    switcher(const switcher&) = delete;
+    switcher(switcher&&);
+
+    switcher& operator=(const switcher&) = delete;
+    switcher& operator=(switcher&&);
 
     void learn(const map&, num reg);
     void recall(const map&, num reg);
@@ -42,7 +49,8 @@ public:
     void write(num id, num reg, const std::string& data);
 
 private:
-    serial_port port_;
+    serial_port* port_ = nullptr;
+    int ci_;
 
     query_response_callback qcb_;
     write_response_callback wcb_;
