@@ -6,6 +6,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "types.hpp"
+#include <stdexcept>
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace pbus
@@ -21,6 +22,30 @@ num to_num(const std::string& s)
         else return bad_num;
 
     return n;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void throw_if_id_out_of_range(num id, const std::string& where)
+{
+    if(id > max_id) throw std::out_of_range{
+        "Device # out of range in " + where
+    };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void throw_if_reg_out_of_range(num reg, const std::string& where)
+{
+    if(reg > max_reg) throw std::out_of_range{
+        "Register # out of range in " + where
+    };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void throw_if_fn_out_of_range(num fn, const std::string& where)
+{
+    if(fn > max_fn) throw std::out_of_range{
+        "Function # out of range in " + where
+    };
 }
 
 ////////////////////////////////////////////////////////////////////////////////
