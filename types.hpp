@@ -9,7 +9,7 @@
 #define PBUS_TYPES_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
-#include <cstdint>
+#include <limits>
 #include <set>
 #include <string>
 
@@ -26,11 +26,15 @@ constexpr char read    = 'R';
 constexpr char write   = 'W';
 constexpr char delim   = '\x0d';
 
-////////////////////////////////////////////////////////////////////////////////
-using num = std::uint8_t;
+using num = unsigned int;
 using map = std::set<num>;
 
-constexpr auto invalid = static_cast<num>(-1);
+constexpr num max_id  = 23;
+constexpr num max_reg = 0xfff;
+constexpr num max_fn  = 0xf;
+
+////////////////////////////////////////////////////////////////////////////////
+constexpr auto bad_num = std::numeric_limits<num>::max();
 num to_num(const std::string&);
 
 ////////////////////////////////////////////////////////////////////////////////

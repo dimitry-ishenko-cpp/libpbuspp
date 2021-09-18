@@ -18,7 +18,7 @@ num to_num(const std::string& s)
     for(auto c : s)
              if(c >= '0' && c <= '9') n = (n << 4) + c - '0';
         else if(c >= 'A' && c <= 'F') n = (n << 4) + c - 'A' + 10;
-        else return invalid;
+        else return bad_num;
 
     return n;
 }
