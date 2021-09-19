@@ -31,11 +31,12 @@ public:
     ~switcher();
 
     switcher(const switcher&) = delete;
-    switcher(switcher&&);
+    switcher(switcher&& rhs) { *this = std::move(rhs); }
 
     switcher& operator=(const switcher&) = delete;
     switcher& operator=(switcher&&);
 
+    ////////////////////
     void learn(const map&, num reg);
     void recall(const map&, num reg);
     void trigger(const map&, num fn);

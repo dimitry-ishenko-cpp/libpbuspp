@@ -6,9 +6,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 #include "switcher.hpp"
-
-#include <stdexcept>
-#include <utility>
+#include <utility> // std::swap
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace pbus
@@ -47,12 +45,6 @@ switcher::switcher(serial_port& port) :
 switcher::~switcher()
 {
     if(port_) port_->remove_recv_callback(ci_);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-switcher::switcher(switcher&& rhs)
-{
-    *this = std::move(rhs);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -107,6 +99,7 @@ void switcher::write(num id, num reg, const std::string& data)
 {
     throw_if_id_out_of_range(id, "switcher::write()");
     throw_if_reg_out_of_range(reg, "switcher::write()");
+    throw_if_data_out_of_range(data, "switcher::write()");
 
     port_->send(pbus::write + to_hex(id, 2) + to_hex(reg, 3) + data);
 }
