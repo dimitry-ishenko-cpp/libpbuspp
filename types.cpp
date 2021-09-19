@@ -51,6 +51,14 @@ void throw_if_fn_out_of_range(num fn, const std::string& where)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+void throw_if_data_out_of_range(const std::string& data, const std::string& where)
+{
+    if(data.size() > max_data_len) throw std::out_of_range{
+        "Length of data out of range in " + where
+    };
+}
+
+////////////////////////////////////////////////////////////////////////////////
 std::string to_hex(const pbus::map& map)
 {
     std::bitset<max_id + 1> mask;

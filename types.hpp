@@ -32,14 +32,16 @@ using map = std::set<num>;
 constexpr num max_id  = 23;
 constexpr num max_reg = 0xfff;
 constexpr num max_fn  = 0xf;
+constexpr num max_data_len = 16;
 
 ////////////////////////////////////////////////////////////////////////////////
 constexpr auto bad_num = std::numeric_limits<num>::max();
 num to_num(const std::string&);
 
-void throw_if_id_out_of_range (num, const std::string& where);
+void throw_if_id_out_of_range(num, const std::string& where);
 void throw_if_reg_out_of_range(num, const std::string& where);
-void throw_if_fn_out_of_range (num, const std::string& where);
+void throw_if_fn_out_of_range(num, const std::string& where);
+void throw_if_data_out_of_range(const std::string&, const std::string& where);
 
 std::string to_hex(const pbus::map&);
 std::string to_hex(num, std::size_t);
