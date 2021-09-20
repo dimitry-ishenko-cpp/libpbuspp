@@ -46,6 +46,8 @@ void throw_if_data_out_of_range(const std::string&, const std::string& where);
 std::string to_hex(const pbus::map&);
 std::string to_hex(num, std::size_t);
 
+map to_map(const std::string&);
+
 ////////////////////////////////////////////////////////////////////////////////
 }
 

@@ -85,4 +85,17 @@ std::string to_hex(num n, std::size_t size)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+map to_map(const std::string& s)
+{
+    pbus::map map;
+    if(auto n = to_num(s); n != bad_num)
+    {
+        std::bitset<max_id + 1> mask{ n };
+        for(auto i = 0; i < mask.size(); ++i) if(mask[i]) map.insert(i);
+    }
+
+    return map;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 }
