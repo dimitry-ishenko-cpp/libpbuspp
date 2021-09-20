@@ -9,14 +9,14 @@ The **libpbus++** library allows one to control peripheral devices as a master (
 Debian/Ubuntu/etc:
 
 ```shell
-$ p=libpbus++ v=0.0
+$ p=libpbus++ v=1.0
 $ wget https://github.com/dimitry-ishenko-cpp/libpbuspp/releases/download/v${v}/${p}_${v}_amd64.deb
 $ sudo apt install ./${p}_${v}_amd64.deb
 ```
 
 Install the development package, if you are planning to develop applications with **libpbus++**:
 ```shell
-$ p=libpbus++-dev v=0.0
+$ p=libpbus++-dev v=1.0
 $ wget https://github.com/dimitry-ishenko-cpp/libpbuspp/releases/download/v${v}/${p}_${v}_amd64.deb
 $ sudo apt install ./${p}_${v}_amd64.deb
 ```
@@ -24,14 +24,14 @@ $ sudo apt install ./${p}_${v}_amd64.deb
 RaspberryPi:
 
 ```shell
-$ p=libpbus++ v=0.0
+$ p=libpbus++ v=1.0
 $ wget https://github.com/dimitry-ishenko-cpp/libpbuspp/releases/download/v${v}/${p}_${v}_armhf.deb
 $ sudo apt install ./${p}_${v}_armhf.deb
 ```
 
 Install the development package, if you are planning to develop applications with **libpbus++**:
 ```shell
-$ p=libpbus++-dev v=0.0
+$ p=libpbus++-dev v=1.0
 $ wget https://github.com/dimitry-ishenko-cpp/libpbuspp/releases/download/v${v}/${p}_${v}_armhf.deb
 $ sudo apt install ./${p}_${v}_armhf.deb
 ```
@@ -41,7 +41,7 @@ $ sudo apt install ./${p}_${v}_armhf.deb
 Stable version (requires [CMake](https://cmake.org/) >= 3.1 and [asio](https://think-async.com/Asio/)):
 
 ```shell
-$ p=libpbus++ v=0.0
+$ p=libpbus++ v=1.0
 $ wget https://github.com/dimitry-ishenko-cpp/libpbuspp/releases/download/v${v}/${p}-${v}.tar.bz2
 $ tar xzf v${v}.tar.gz
 $ mkdir ${p}-${v}/build
