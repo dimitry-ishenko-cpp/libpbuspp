@@ -20,16 +20,16 @@ switcher::switcher(serial_port& port) :
     {
         if(data.size()) switch(data[0])
         {
-        case pbus::query:
-            if(qcb_)
+        case pbus::query: // query response
+            if(qcb_ && data.size() -1 <= 1 + max_data_len)
             {
                 data.erase(0, 1);
                 qcb_(data);
             }
             break;
 
-        case pbus::write:
-            if(wcb_ && data.size() >= 6)
+        case pbus::write: // write response
+            if(wcb_ && data.size() >= 6 && data.size() <= 6 + max_data_len)
             {
                 auto id = to_num(data.substr(1, 2));
                 auto reg = to_num(data.substr(3, 3));
