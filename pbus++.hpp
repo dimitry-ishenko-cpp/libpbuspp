@@ -9,6 +9,7 @@
 #define PBUS_HPP
 
 ////////////////////////////////////////////////////////////////////////////////
+#include <pbus++/device.hpp>
 #include <pbus++/serial_port.hpp>
 #include <pbus++/switcher.hpp>
 #include <pbus++/types.hpp>

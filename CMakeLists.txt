@@ -10,6 +10,7 @@ add_definitions(-DASIO_STANDALONE)
 #find_package(Threads REQUIRED)
 
 set(HEADERS
+    device.hpp
     serial_port.hpp
     switcher.hpp
     types.hpp
@@ -17,6 +18,7 @@ set(HEADERS
 set(OVERALL_HEADER pbus++.hpp)
 
 set(SOURCES
+    device.cpp
     serial_port.cpp
     switcher.cpp
     types.cpp
